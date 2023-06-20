@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  
+ <meta charset="utf-8">
+ <link rel="icon" type="image/svg+xml" href="/icon.ico" />
+ <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+  <title>Molecules in 3D view</title>
+  
+  <meta name="keywords"
+    content=" chemistry, 3D, model, webgl, threejs, effectual, learning, science, freelance, creative, Ethanol, molecule" />
+  <meta name="author" content="sajith EP, effectuallearning@gmail.com" />
+  <meta name="developer" content="3D display of molecules" />
+<style>
+  #container {
+    position: absolute;
+	border: 0px;
+	left: 0;
+	right: 0;
+	  left: 25%;
+	  width: 75%;
+  }
+
+</style>
+  <script type="module" crossorigin src="/assets/main-46e5d56c.js"></script>
+  <link rel="modulepreload" crossorigin href="/assets/CSS3DRenderer-f5040af3.js">
+  <link rel="stylesheet" href="/assets/CSS3DRenderer-fe9d6d24.css">
+</head>
+
+<body>
+  <div id="container">
+    <div  id="info" ></div>>
+    <div id="topmenu">
+   
+			<button id="b_a">Atoms</button><button id="b_b">Bonds</button><button id="b_ab">Atoms + Bonds</button>
+		</div>
+  </div>
+  <iframe id="viewer" name="viewer"  allow="fullscreen; xr-spatial-tracking;"></iframe>
+
+  <a id="viewbutton" target="_blank"><img src="/ic_code_black_24dp.svg"></a>
+ 
+ 
+  <div id="menu"></div>
+
+  <script>
+
+
+    const MOLECULES = {
+      "Ethanol": "ethanol.pdb",
+      "Aspirin": "aspirin.pdb",
+      "Caffeine": "caffeine.pdb",
+      "Nicotine": "nicotine.pdb",
+      "Cholesterol": "cholesterol.pdb",
+      "Glucose": "glucose.pdb",
+      "Aluminium oxide": "Al2O3.pdb",
+      "Copper": "cu.pdb",
+      "Salt": "nacl.pdb",
+      "YBCO superconductor": "ybco.pdb",
+      "Buckyball": "buckyball.pdb",
+      "Diamond": "diamond.pdb",
+      "Graphite": "graphite.pdb"
+    };
+
+    let container = document.getElementById('container')
+    const menu = document.getElementById("menu");
+    const viewSrcButton = document.getElementById( 'viewbutton' );
+    createMenu()
+
+ 
+    function createMenu() {
+
+      for (const m in MOLECULES) {
+        // ${m}.html https://effectuall.github.io/
+        const template = `
+				<div class="card">
+					<a href="Ethanol.html" target="viewer">
+            <button><div class="title">${m}</div></button>
+						
+					</a>
+				</div>
+			`;
+
+        const div = document.createElement('div');
+        div.innerHTML = template.trim();
+        const link = div.firstChild;
+
+        link.querySelector('a[target="viewer"]').addEventListener('click', function (event) {
+
+          if (event.button !== 0 || event.ctrlKey || event.altKey || event.metaKey) return;
+
+          selectFile(m);
+
+        });
+        menu.appendChild( link );
+
+      }
+    }
+   
+    function selectFile(file) {
+      console.log('file', file)
+      window.location.hash = file +".html";
+      viewer.focus();
+      console.log(file)
+     
+      localStorage.setItem("inputValue", file  );
+      // Reveal "View source" button and set attributes to this example
+      viewSrcButton.style.display = '';
+      viewSrcButton.href = file +".html";
+      viewSrcButton.title = file +".html";
+
+    }
+   
+
+  </script>
+  
+</body>
+
+</html>
